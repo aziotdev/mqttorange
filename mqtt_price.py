@@ -17,7 +17,7 @@ import paho.mqtt.client as mqtt
 oled = ssd1306(port=0, address=0x3C)
 
 font = ImageFont.load_default()
-font2 = ImageFont.truetype('C&C Red Alert [INET].ttf', 14)
+font2 = ImageFont.truetype('C&C Red Alert [INET].ttf', 18)
 
  
 MQTT_SERVER = "mqtt.aziot.org"
@@ -34,10 +34,12 @@ def on_connect(client, userdata, flags, rc):
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
+
+    x = msg.payload.split(",")
     with canvas(oled) as draw:
         draw.text((0, 0), "Channel "+msg.topic , font=font2, fill=255)
-        draw.text((0, 18), "Item ", font=font2, fill=255)
-        draw.text((0, 32), "Price ", font=font2, fill=255)
+        draw.text((0, 22), "Item " +x[0], font=font2, fill=255)
+        draw.text((0, 40), "Price "+x[1], font=font2, fill=255)
         #draw.text((0, 38), network('wlan0'), font=font2, fill=255)
  
 client = mqtt.Client()
