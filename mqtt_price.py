@@ -35,14 +35,14 @@ def on_message(client, userdata, msg):
         print(msg.topic+" "+str(msg.payload))
 
         x = msg.payload.split(",")
-        if(len(x)==2)
+        if(len(x)==2):
                 with canvas(oled) as draw:
                         draw.text((0, 0), "Channel "+msg.topic , font=font2, fill=255)
                         draw.text((0, 22), "Item " +x[0], font=font2, fill=255)
                         draw.text((0, 40), "Price "+x[1], font=font2, fill=255)
                         #draw.text((0, 38), network('wlan0'), font=font2, fill=255)
 
-        if(len(x)==1)
+        if(len(x)==1):
                 with canvas(oled) as draw:
                         draw.text((0, 0), msg.topic , font=font2, fill=255)
                         draw.text((0, 22), x[0], font=font4, fill=255)
