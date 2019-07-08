@@ -25,27 +25,31 @@ MQTT_PATH = "PRICE"
  
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
- 
-    # Subscribing in on_connect() means that if we lose the connection and
-    # reconnect then subscriptions will be renewed.
-    client.subscribe(MQTT_PATH)
+        print("Connected with result code "+str(rc))
+        # Subscribing in on_connect() means that if we lose the connection and
+        # reconnect then subscriptions will be renewed.
+        client.subscribe(MQTT_PATH)
  
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
-    print(msg.topic+" "+str(msg.payload))
+        print(msg.topic+" "+str(msg.payload))
 
-    x = msg.payload.split(",")
-    with canvas(oled) as draw:
-        draw.text((0, 0), "Channel "+msg.topic , font=font2, fill=255)
-        draw.text((0, 22), "Item " +x[0], font=font2, fill=255)
-        draw.text((0, 40), "Price "+x[1], font=font2, fill=255)
-        #draw.text((0, 38), network('wlan0'), font=font2, fill=255)
- 
+        x = msg.payload.split(",")
+        if(len(x)==2)
+                with canvas(oled) as draw:
+                        draw.text((0, 0), "Channel "+msg.topic , font=font2, fill=255)
+                        draw.text((0, 22), "Item " +x[0], font=font2, fill=255)
+                        draw.text((0, 40), "Price "+x[1], font=font2, fill=255)
+                        #draw.text((0, 38), network('wlan0'), font=font2, fill=255)
+
+        if(len(x)==1)
+                with canvas(oled) as draw:
+                        draw.text((0, 0), msg.topic , font=font2, fill=255)
+                        draw.text((0, 22), x[0], font=font4, fill=255)
+
 client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
- 
 client.connect(MQTT_SERVER, 1883, 60)
  
 # Blocking call that processes network traffic, dispatches callbacks and
