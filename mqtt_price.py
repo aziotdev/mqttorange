@@ -51,12 +51,14 @@ def on_message(client, userdata, msg):
                 y = x[0].split("-")
                 with canvas(oled) as draw:
                         draw.text((0, 0), msg.topic , font=font2, fill=255)
-                        if (len(y)==2):
-                                draw.text((0, 22), y[0], font=font4, fill=255)
-                                draw.text((0, 55), y[1], font=font4, fill=255)
-                        if (len(y)==1):
-                                draw.text((0, 22), x[1], font=font4, fill=255)
-                                #draw.text((0, 55), y[1], font=font6, fill=255)
+                        draw.text((0, 22), x[1], font=font4, fill=255)
+                        
+#                        if (len(y)==2):
+#                                draw.text((0, 22), y[0], font=font4, fill=255)
+#                                draw.text((0, 55), y[1], font=font4, fill=255)
+#                        if (len(y)==1):
+#                                draw.text((0, 22), x[1], font=font4, fill=255)
+#                                #draw.text((0, 55), y[1], font=font6, fill=255)
 
 
 client = mqtt.Client()
