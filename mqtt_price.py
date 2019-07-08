@@ -18,8 +18,9 @@ oled = ssd1306(port=0, address=0x3C)
 
 font = ImageFont.load_default()
 font2 = ImageFont.truetype('C&C Red Alert [INET].ttf', 18)
-font4 = ImageFont.truetype('C&C Red Alert [INET].ttf', 24)
- 
+font4 = ImageFont.truetype('C&C Red Alert [INET].ttf', 28)
+font6 = ImageFont.truetype('C&C Red Alert [INET].ttf', 36)
+
 MQTT_SERVER = "mqtt.aziot.org"
 MQTT_PATH = "PRICE"
  
@@ -38,7 +39,7 @@ def on_message(client, userdata, msg):
         x = msg.payload.split(",")
         
         if(len(x)==2):
-                print(" length ==2")
+                #print(" length ==2")
                 with canvas(oled) as draw:
                         draw.text((0, 0), "Channel "+msg.topic , font=font2, fill=255)
                         draw.text((0, 22), "Item " +x[0], font=font2, fill=255)
@@ -46,10 +47,17 @@ def on_message(client, userdata, msg):
                         #draw.text((0, 38), network('wlan0'), font=font2, fill=255)
 
         if(len(x)==1):
-                print(" length ==1")
+                #print(" length ==1")
+                y = x[0].split("-")
                 with canvas(oled) as draw:
                         draw.text((0, 0), msg.topic , font=font2, fill=255)
-                        draw.text((0, 22), x[0], font=font4, fill=255)
+                        if (len(y)==2):
+                                draw.text((0, 22), y[0], font=font4, fill=255)
+                                draw.text((0, 55), y[1], font=font6, fill=255)
+                        if (len(y)==1):
+                                draw.text((0, 22), x[1], font=font6, fill=255)
+                                #draw.text((0, 55), y[1], font=font6, fill=255)
+
 
 client = mqtt.Client()
 client.on_connect = on_connect
