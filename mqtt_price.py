@@ -56,9 +56,8 @@ def on_message(client, userdata, msg):
 
         if(len(x)==1):
                 #print(" length ==1")
-                
                 with canvas(oled) as draw:
-                        draw.text((0, 0), msg.topic , font=font4, fill=255)
+                        draw.text((0, 0), msg.topic , font=font2, fill=255)
                         draw.text((0, 22), x[0], font=font4, fill=255)
 
 client = mqtt.Client()
