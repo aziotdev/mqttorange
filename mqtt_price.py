@@ -17,9 +17,11 @@ import paho.mqtt.client as mqtt
 oled = ssd1306(port=0, address=0x3C)
 
 font = ImageFont.load_default()
+font1 = ImageFont.truetype('C&C Red Alert [INET].ttf', 10)
 font2 = ImageFont.truetype('C&C Red Alert [INET].ttf', 18)
 font4 = ImageFont.truetype('C&C Red Alert [INET].ttf', 28)
- 
+font6 = ImageFont.truetype('C&C Red Alert [INET].ttf', 36)
+
 MQTT_SERVER = "mqtt.aziot.org"
 MQTT_PATH = "PRICE"
  
@@ -44,11 +46,19 @@ def on_message(client, userdata, msg):
                         draw.text((0, 22), "Item " +x[0], font=font2, fill=255)
                         draw.text((0, 40), "Price "+x[1], font=font2, fill=255)
                         #draw.text((0, 38), network('wlan0'), font=font2, fill=255)
+        if(len(x) ==3):
+                #print(" length ==2")
+                with canvas(oled) as draw:
+                        draw.text((0, 0), x[0] , font=font2, fill=255)
+                        draw.text((0, 22), "Rs " +x[1], font=font2, fill=255)
+                        draw.text((0, 40), x[2], font=font1, fill=255)
+                        #draw.text((0, 38), network('wlan0'), font=font2, fill=255)                        
 
         if(len(x)==1):
                 #print(" length ==1")
+                
                 with canvas(oled) as draw:
-                        draw.text((0, 0), msg.topic , font=font2, fill=255)
+                        draw.text((0, 0), msg.topic , font=font4, fill=255)
                         draw.text((0, 22), x[0], font=font4, fill=255)
 
 client = mqtt.Client()
